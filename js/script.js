@@ -164,28 +164,31 @@ const checkCollision = () => {
 
 }
 
+let gameSpeed = 300;
+
 
 const checkEat = () => {
-    const head = snake[snake.length - 1]
+    const head = snake[snake.length - 1];
 
     if (head.x == food.x && head.y == food.y) {
-        incrementScore()
-        snake.push(head)
+        incrementScore();
+        snake.push(head);
 
-        let x = randomPosition()
-        let y = randomPosition()
+        gameSpeed = Math.max(50, gameSpeed - 20); 
+
+        let x = randomPosition();
+        let y = randomPosition();
 
         while (snake.find((position) => position.x == x && position.y == y)) {
-            x = randomPosition()
-            y = randomPosition()
+            x = randomPosition();
+            y = randomPosition();
         }
 
-        food.x = x
-        food.y = y
-        food.color = randomColor()
+        food.x = x;
+        food.y = y;
+        food.color = randomColor();
     }
-}
-
+};
 
 
 
@@ -215,7 +218,7 @@ const gameLoop = () => {
 
     loopId = setTimeout(() => {
         gameLoop()
-    }, 300)
+    }, gameSpeed);
 }
 
 gameLoop()
@@ -243,6 +246,7 @@ buttonPlay.addEventListener("click", () => {
     score.innerText = "00"
     menu.style.display = "none"
     canvas.style.filter = "none"
+    location.reload();
 
     snake = [initialPosition]
 })
